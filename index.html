@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wander With Suzy — Travel Blog</title>
+<meta name="description" content="Wander With Suzy — stories from every corner of the world.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23FF6B6B'/%3E%3Ctext x='50%25' y='56%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-size='36' fill='%23fff'%3ES%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Nunito+Sans:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<nav class="nav"><a class="brand" href="./index.html">Wander <span>With</span> Suzy</a>
+<ul><li><a href="./index.html" class="active" aria-current="page">Home</a></li><li><a href="./blog.html">Blog</a></li><li><a href="./about.html">About</a></li></ul></nav>
+
+<header class="hero"><div class="in">
+<span class="kicker">Travel blog · Lisbon based</span>
+<h1>Wander With Suzy</h1>
+<p>Stories From Every Corner of the World.</p>
+<a class="btn" href="#explore">Explore the map ↓</a>
+</div></header>
+<section id="explore">
+  <div class="sec-head reveal"><div><h2>Where I've been</h2><p>Tap a pin to open the story. Use the filters to explore by mood.</p></div>
+  <div class="filters" role="group" aria-label="Filter destinations">
+    <button class="on" data-f="All">All</button><button data-f="Culture">Culture</button><button data-f="Food">Food</button><button data-f="Adventure">Adventure</button>
+  </div></div>
+  <div id="map" class="reveal" aria-label="Interactive world map of Suzy's destinations"></div>
+  <div class="legend"><span><i class="h"></i>Home base</span><span><i></i>Destination</span></div>
+</section>
+<section>
+  <div class="sec-head reveal"><div><h2>Latest stories</h2><p>Fresh from the road.</p></div><a class="btn" href="./blog.html">All posts →</a></div>
+  <div class="grid" id="latest"></div>
+</section>
+<footer id="footer"><div class="soc">
+<a href="https://instagram.com" aria-label="Instagram" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a>
+<a href="https://youtube.com" aria-label="YouTube" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.8 15.1V8.9l5.8 3.1z"/></svg></a>
+<a href="https://x.com" aria-label="X / Twitter" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2h3.4l-7.4 8.5L23 22h-6.8l-5.3-7-6.1 7H1.4l7.9-9L1 2h7l4.8 6.4zm-1.2 18h1.9L7.1 4H5.1z"/></svg></a>
+</div><span>© 2025 Wander With Suzy</span><a class="top" href="#">↑ Back to top</a></footer>
+<script src="./common.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script>
+document.getElementById('latest').innerHTML=POSTS.slice(0,3).map(cardHTML).join('');
+// Destination data — change this list and the map updates automatically
+const PLACES=[
+ {c:"Portugal",city:"Lisbon",ll:[38.7223,-9.1393],d:"Where it all began. Pastéis de nata and golden-hour sunsets over the Tagus.",cat:"Home Base",img:"place-01"},
+ {c:"Japan",city:"Tokyo",ll:[35.6762,139.6503],d:"Cherry blossoms and beautiful, controlled chaos.",cat:"Culture",img:"place-02"},
+ {c:"Thailand",city:"Bangkok",ll:[13.7563,100.5018],d:"Street food heaven. Every corner is a new flavor.",cat:"Food",img:"place-03"},
+ {c:"Morocco",city:"Marrakech",ll:[31.6295,-7.9811],d:"The souks, the colors, the glorious madness of Jemaa el-Fna.",cat:"Adventure",img:"place-04"},
+ {c:"Italy",city:"Amalfi Coast",ll:[40.6340,14.6027],d:"Lemon trees, cliffside drives, and the bluest water on earth.",cat:"Culture",img:"place-05"},
+ {c:"Vietnam",city:"Hanoi",ll:[21.0278,105.8342],d:"Motorbikes, steaming pho, and old quarter magic at 6am.",cat:"Food",img:"place-06"},
+ {c:"Greece",city:"Santorini",ll:[36.3932,25.4615],d:"Blue domes and impossible sunsets. Yes, it's as beautiful as the photos.",cat:"Culture",img:"place-07"},
+ {c:"Indonesia",city:"Bali",ll:[-8.3405,115.0920],d:"Rice terraces at dawn, temple incense, and surf at sunset.",cat:"Adventure",img:"place-08"}];
+const map=L.map('map',{scrollWheelZoom:false,worldCopyJump:true}).setView([25,40],2);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+const cluster=L.markerClusterGroup({showCoverageOnHover:false,maxClusterRadius:45});
+const markers=PLACES.map((p,i)=>{
+  const icon=L.divIcon({className:'',html:`<div class="pin ${p.cat==='Home Base'?'home':''}" style="animation-delay:${i*0.15}s"></div>`,iconSize:[22,22],iconAnchor:[11,11]});
+  const m=L.marker(p.ll,{icon,title:p.city});
+  m.bindPopup(`<div class="pop"><img src="./images/${p.img}.jpg" alt="${p.city}"><div class="b"><span class="cat">${p.cat}</span><h3>${p.city}, ${p.c}</h3><p>${p.d}</p><a href="./blog.html">Read More →</a></div></div>`,{maxWidth:260});
+  m.on('click',()=>{map.flyTo(p.ll,6,{duration:1.2}); map.once('moveend',()=>m.openPopup());});
+  m.place=p; return m;});
+function apply(f){cluster.clearLayers(); const sel=markers.filter(m=>f==='All'||m.place.cat===f||m.place.cat==='Home Base'&&f==='All'); cluster.addLayers(sel); map.addLayer(cluster);
+  if(sel.length) map.flyToBounds(L.featureGroup(sel).getBounds().pad(0.35),{duration:.8,maxZoom:4});}
+document.querySelectorAll('.filters button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.filters button').forEach(x=>x.classList.remove('on'));b.classList.add('on');apply(b.dataset.f);}));
+apply('All');
+</script>
+</body></html>
